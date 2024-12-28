@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+enum AuthType {
+  TWO_FACTOR_AUTH
+  STANDARD_AUTH
+  GOOGLE_OAUTH
+}
+
+enum Status {
+  ONLINE
+  OFFLINE
+}
+
+model User {
+  id         String   @id @unique @db.VarChar(36)
+  photo      String?  @db.Text
+  name       String   @db.VarChar(50)
+  username   String   @unique @db.VarChar(50)
+  email      String   @unique @db.VarChar(50)
+  password   String?  @db.VarChar(16)
+  connection Status   @default(OFFLINE)
+  type       AuthType
+  hashedRt   String?  @unique @db.VarChar(300) //refresh token hash
+  // otpCode String? @db.VarChar(8)
+}
