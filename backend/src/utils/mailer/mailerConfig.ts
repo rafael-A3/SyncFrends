@@ -16,4 +16,4 @@ transporter.verify((error, success) => {
     if (error) console.log(error)
 })
 
-export default transporter;
+export { transporter };

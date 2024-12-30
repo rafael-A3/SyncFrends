@@ -1,7 +1,7 @@
 import "express-async-errors";
 import express from "express";
 import cors from "cors";
-import { GlobalHandler } from "../utils/exceptions/global.handler";
+import { GlobalHandler } from "../utils/exceptions/globalHandler";
 
 const app = express();
 app.use(express.json())

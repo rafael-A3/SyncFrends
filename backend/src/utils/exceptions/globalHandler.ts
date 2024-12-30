@@ -1,4 +1,4 @@
-import { ExceptionHandler } from "./exception.handler";
+import { ExceptionHandler } from "./exceptionHandler";
 import { Response, Request, NextFunction } from "express";
 
 export const GlobalHandler = (
