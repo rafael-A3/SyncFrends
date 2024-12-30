@@ -9,10 +9,10 @@ export const GlobalHandler = (
 ) => {
     const message = error.statusCode !== 500
         ? error.message
-        : "Ops! Something went wrong!";
+        : "Ops! An unexpected error occurred. Try again later";
 
     const statusCode = error.statusCode || 500;
-    console.log({ error: message, status: statusCode });
+    if (statusCode === 500) console.log(error);
 
     res.status(statusCode).json({
         message,

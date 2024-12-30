@@ -26,7 +26,18 @@ model User {
   email      String   @unique @db.VarChar(50)
   password   String?  @db.VarChar(16)
   connection Status   @default(OFFLINE)
-  type       AuthType
-  hashedRt   String?  @unique @db.VarChar(300) //refresh token hash
-  // otpCode String? @db.VarChar(8)
+  type       AuthType @default(STANDARD_AUTH)
+
+  auth       UserAuth?
+  authUserId Int
+}
+
+model UserAuth {
+  id           Int      @id @default(autoincrement())
+  refreshToken String?  @unique @db.VarChar(300) //refresh token hash
+  otpCode      String // Otp code hash
+  otpCodeExp   DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
