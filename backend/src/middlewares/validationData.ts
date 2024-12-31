@@ -10,7 +10,7 @@ export const validationData = (schema: Zod.ZodTypeAny) => {
         catch (error) {
             if (error instanceof ZodError) {
                 const message = error.errors[0].message;
-                res.status(400).json({ error: "Invalid data", details: message })
+                res.status(400).json({ error: "Invalid data", message })
             }
 
             else {

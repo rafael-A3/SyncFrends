@@ -1,6 +1,6 @@
 import * as bcrypt from "bcrypt";
 
-export class Hash {
+export class HashService {
     hashData(data: string) {
         return bcrypt.hashSync(data, 10);
     }

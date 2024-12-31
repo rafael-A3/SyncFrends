@@ -2,11 +2,11 @@ import randomString from "randomstring";
 import { addMinutes } from "date-fns";
 
 export const otpCode = () => {
-    const otpCode = randomString.generate({
+    const newOtpCode = randomString.generate({
         length: 6,
         charset: "numeric",
     })
 
-    const otpCodeExp = addMinutes(new Date(), 2);
-    return { otpCode, otpCodeExp };
+    const otpCodeExp = addMinutes(new Date(), 10);
+    return { newOtpCode, otpCodeExp };
 }

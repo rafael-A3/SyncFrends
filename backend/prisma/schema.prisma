@@ -24,12 +24,12 @@ model User {
   name       String   @db.VarChar(50)
   username   String   @unique @db.VarChar(50)
   email      String   @unique @db.VarChar(50)
-  password   String?  @db.VarChar(16)
+  password   String?  @db.VarChar(70)
   connection Status   @default(OFFLINE)
   type       AuthType @default(STANDARD_AUTH)
+  verified   Boolean  @default(false)
 
   auth       UserAuth?
-  authUserId Int
 }
 
 model UserAuth {

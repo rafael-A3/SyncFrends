@@ -1,5 +1,5 @@
-import { transporter } from "./mailerConfig";
-import { Mailer } from "./mailer";
+import { transporter } from "./mailerServiceConfig";
+import { MailerService } from "./mailerService";
 
 jest.mock("./mailerConfig", () => ({
     transporter: {
@@ -7,10 +7,10 @@ jest.mock("./mailerConfig", () => ({
     }
 }))
 
-describe("mailer", () => {
+describe("mailerService", () => {
     it("should be called with correct data", async () => {
-        const mailer = new Mailer();
-        await mailer.deliverEmail("Jhon", "jhon@example.com", 123456);
+        const mailer = new MailerService();
+        await mailer.deliverEmail("Jhon", "jhon@example.com", "123456");
 
         expect(transporter.sendMail).toHaveBeenCalledTimes(1);
         expect(transporter.sendMail).toHaveBeenCalledWith({
