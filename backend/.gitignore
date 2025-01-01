@@ -1,4 +1,3 @@
 node_modules
 .env
-src/modules/auth/controller/loginController.ts
-src/modules/auth/service/loginService.ts
+cleandb.ts

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError, z } from "zod";
+import { BadRequest } from "../utils/exceptions/exceptionHandler";
 
 export const validationData = (schema: Zod.ZodTypeAny) => {
     return (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +11,7 @@ export const validationData = (schema: Zod.ZodTypeAny) => {
         catch (error) {
             if (error instanceof ZodError) {
                 const message = error.errors[0].message;
-                res.status(400).json({ error: "Invalid data", message })
+                throw new BadRequest(message);
             }
 
             else {

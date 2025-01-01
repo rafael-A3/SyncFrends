@@ -5,11 +5,15 @@ const registerSchema = z.object({
         z.string({ message: "Name Is Requred" })
             .regex(/^[a-zA-ZÀ-ú\s]{3,50}$/, {
                 message: "Name must contain 3 to 50 characters (letters/spaces)"
-            }),
+            })
+            .trim(),
 
     username:
         z.string({ message: "Username Is Requred" })
-            .regex(/^[a-z0-9_.-]{3,50}$/),
+            .toLowerCase()
+            .regex(/^[a-z0-9_.-]{3,50}$/, {
+                message: "Username is 3 to 50 and accepts letters, numbers and (_.-)"
+            }),
 
     email:
         z.string({ message: "Email Is Requred" })
@@ -17,20 +21,37 @@ const registerSchema = z.object({
 
     password:
         z.string({ message: "Password Is Requred" })
-            .regex(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z#?!@$%^&*\(\)\[\]\<\>\_\=\+-]).{8,16}$/, {
-                message: "Password must contain at least a lowercase letter, number and a special character (#?!@$%^&*()[]<>_=+-)"
-            })
+            .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9&%$#@])[A-Za-z0-9&%$#@]{8,16}$/
+                , {
+                    message: "Password must match /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9&%$#@])[A-Za-z0-9&%$#@]{8,16}$/"
+                })
+            .trim()
 })
 
 const loginSchema = z.object({
-    username: z.string().regex(/^[a-z0-9_.-]{3,50}$/).optional(),
-    email: z.string().email().optional(),
-    password: z.string().regex(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z#?!@$%^&*\(\)\[\]\<\>\_\=\+-]).{8,16}$/)
+    username:
+        z.string()
+            .toLowerCase()
+            .regex(/^[a-z0-9_.-]{3,50}$/, {
+                message: "Username is 3 to 50 and accepts letters, numbers and (_.-)"
+            })
+            .trim()
+            .optional(),
+
+    email: z.string()
+        .email()
+        .optional(),
+
+    password:
+        z.string()
+            .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9&%$#@])[A-Za-z0-9&%$#@]{8,16}$/, {
+                message: "Password must match /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9&%$#@])[A-Za-z0-9&%$#@]{8,16}$/"
+            })
+            .trim()
+
 }).refine((data) => data.username || data.email, {
     message: "Either username or email must be provided",
     path: ["username"]
 });
 
-const resetPassSchema = z.string().regex(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z#?!@$%^&*\(\)\[\]\<\>\_\=\+-]).{8,16}$/)
-
-export { registerSchema, loginSchema, resetPassSchema };
+export { registerSchema, loginSchema };

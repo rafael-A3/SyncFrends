@@ -8,7 +8,6 @@ datasource db {
 }
 
 enum AuthType {
-  TWO_FACTOR_AUTH
   STANDARD_AUTH
   GOOGLE_OAUTH
 }
@@ -29,14 +28,14 @@ model User {
   type       AuthType @default(STANDARD_AUTH)
   verified   Boolean  @default(false)
 
-  auth       UserAuth?
+  auth UserAuth?
 }
 
 model UserAuth {
-  id           Int      @id @default(autoincrement())
-  refreshToken String?  @unique @db.VarChar(300) //refresh token hash
-  otpCode      String // Otp code hash
-  otpCodeExp   DateTime @default(now())
+  id           Int       @id @default(autoincrement())
+  refreshToken String?   @unique @db.VarChar(300) //refresh token hash
+  otpCode      String? // Otp code hash
+  otpCodeExp   DateTime? @default(now())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
