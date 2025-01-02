@@ -9,7 +9,7 @@ export const GlobalHandler = (
 ) => {
     const message = error.statusCode !== 500
         ? error.message
-        : "Ops! An unexpected error occurred. Try again later";
+        : "Internal Error Due To Misconfiguration";
 
     const statusCode = error.statusCode || 500;
     if (statusCode === 500) console.log(error);

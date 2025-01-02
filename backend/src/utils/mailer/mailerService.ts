@@ -8,12 +8,9 @@ export class MailerService {
         name: string,
         otpCode: string
     ) {
-        const filePath = "src/utils/mailer/templates/otpCodeTemplate.hbs";
-        const templatePath = path.join(process.cwd(), filePath);
-
+        const templatePath = path.join(__dirname, "templates/otpCodeTemplate.hbs");
         const templateFile = fs.readFileSync(templatePath, "utf-8");
         const template = hbs.compile(templateFile);
-
         return template({ name, otpCode })
     }
 

@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { loginService } from "../service/loginService";
 import { ILoginUser } from "../../../interfaces/ILoginUser";
 
-export const loginController = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
     const { username, email, password }: ILoginUser = req.body
-    
+
     const { accessToken, refreshToken } = await loginService({
         username, password, email
     });
 
-    res.cookie("user",
+    res.cookie("Authorization",
         JSON.stringify({
             accessToken: accessToken,
             refreshToken: refreshToken

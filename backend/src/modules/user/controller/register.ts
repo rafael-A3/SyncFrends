@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { IRegisterUser } from "../../../interfaces/IRegisterUser";
 import { registerService } from "../service/registerService";
 
-export const registerController = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
     const { name, username, email, password }: IRegisterUser = req.body
     const userData = { id: uuid(), name, username, email, password };
     const newUserEmail = await registerService(userData);

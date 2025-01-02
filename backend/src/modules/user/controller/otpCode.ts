@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { otpCodeService } from "../service/otpService";
 
-export const otpCodeController = async (req: Request, res: Response) => {
+export const otpCode = async (req: Request, res: Response) => {
     const { email } = req.body;
     await otpCodeService(email);
     res.status(200).json({

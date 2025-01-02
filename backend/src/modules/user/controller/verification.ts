@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { verificationService } from "../service/verificationController";
 
-export const verificationController = async (req: Request, res: Response) => {
+export const verification = async (req: Request, res: Response) => {
     const { code } = req.params
     const { email } = req.body
 

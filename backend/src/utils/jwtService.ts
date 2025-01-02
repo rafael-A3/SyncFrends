@@ -1,5 +1,6 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
+import { Unauthorized } from "./exceptions/exceptionHandler";
 
 export class JwtService {
     private readonly accessTokenSecret = process.env.ACCESSTOKEN_SECRET as string
@@ -18,7 +19,15 @@ export class JwtService {
         return jwt.sign({
             sub: id,
         }, this.refreshTokenSecret, {
-            expiresIn: "3d"
+            expiresIn: "1d"
         })
+    }
+
+    verifyToken(token: string, secret: string) {
+        try {
+            return jwt.verify(token, secret);
+        } catch (error) {
+            throw new Unauthorized("Authentication failed");
+        }
     }
 }

@@ -1,31 +1,50 @@
 import { validationData } from "../middlewares/validationData";
 import { loginSchema, registerSchema } from "../schemas/userSchemas";
-import { registerController } from "../modules/auth/controller/registerController";
-import { otpCodeController } from "../modules/auth/controller/otpController";
+import { register } from "../modules/user/controller/register";
+import { otpCode } from "../modules/user/controller/otpCode";
+import { login } from "../modules/user/controller/login";
+import { verification } from "../modules/user/controller/verification";
+import { refreshToken } from "../modules/user/controller/refreshToken";
+import { validateToken } from "../middlewares/validateToken";
 import express from "express";
-import { loginController } from "../modules/auth/controller/loginController";
-import { verificationController } from "../modules/auth/controller/verificationController";
+import { logout } from "../modules/user/controller/logout";
+import { strictLimiter } from "../middlewares/rateLimitting";
 const router = express.Router({ strict: true });
 
 router.post(
     "/register",
+    strictLimiter,
     validationData(registerSchema),
-    registerController
+    register
 )
 
 router.post("/login",
+    strictLimiter,
     validationData(loginSchema),
-    loginController
+    login
+)
+
+router.post("/logout",
+    strictLimiter,
+    validateToken,
+    logout
 )
 
 router.post("/send-code",
+    strictLimiter,
     validationData(registerSchema.pick({ email: true })),
-    otpCodeController
+    otpCode
 )
 
 router.post("/verification/:code(\\d{6})",
+    strictLimiter,
     validationData(registerSchema.pick({ email: true })),
-    verificationController
+    verification
+)
+
+router.get("/refresh-token",
+    strictLimiter,
+    refreshToken
 )
 
 export { router };
