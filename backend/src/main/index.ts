@@ -1,7 +1,8 @@
 import "dotenv/config";
-const PORT = process.env.PORT ?? 3000;
-import app from "./app";
 import { prisma } from "../utils/prisma";
+import app from "./app";
+
+const PORT = process.env.PORT ?? 3000;
 
 prisma.$connect()
     .then(() => console.log("Connected to postgres"))

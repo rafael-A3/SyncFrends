@@ -10,7 +10,7 @@ export const loginService = async (data: ILoginUser) => {
         : { username: data.username };
 
     const user = await prisma.user.findUnique({ where: whereclause });
-    if (!user) throw new NotFound("Email Not Found");
+    if (!user) throw new NotFound("User Not Found");
     if (!user.verified) throw new Unauthorized("Unverified Email Address");
 
     const jwtService = new JwtService();

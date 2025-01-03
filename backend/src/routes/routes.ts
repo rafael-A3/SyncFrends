@@ -9,7 +9,8 @@ import { validateToken } from "../middlewares/validateToken";
 import express from "express";
 import { logout } from "../modules/user/controller/logout";
 import { strictLimiter } from "../middlewares/rateLimitting";
-const router = express.Router({ strict: true });
+import { forgotPassword } from "../modules/user/controller/forgotPassword";
+const router = express.Router();
 
 router.post(
     "/register",
@@ -45,6 +46,12 @@ router.post("/verification/:code(\\d{6})",
 router.get("/refresh-token",
     strictLimiter,
     refreshToken
+)
+
+router.post("/forgot-password/:code(\\d{6})",
+    strictLimiter,
+    validationData(registerSchema.pick({ email: true, password: true })),
+    forgotPassword
 )
 
 export { router };
